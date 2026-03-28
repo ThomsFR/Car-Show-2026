@@ -113,8 +113,7 @@ async function loadData() {
   document.getElementById('table').style.display = 'none';
 
   try {
-    const direct = `https://docs.google.com/spreadsheets/d/` + SHEET_ID + `/export?format=csv&gid=` + GID;
-    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(direct)}&t=${Date.now()}`;
+    const url = `https://script.google.com/macros/s/AKfycbw-jE4kGLW64HPn3SUH7eu4rQJGAqmf1gUTGuGAVyLe1PKSFtc7IIR87mWaHESXjacg/exec?t=${Date.now()}`;
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('Sheet non accessible');
     const csv = await resp.text();
