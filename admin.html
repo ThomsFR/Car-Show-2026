@@ -113,8 +113,8 @@ async function loadData() {
   document.getElementById('table').style.display = 'none';
 
   try {
-    const direct = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}&t=${Date.now()}`;
-    const url = `https://corsproxy.io/?${encodeURIComponent(direct)}`;
+    const direct = `https://docs.google.com/spreadsheets/d/$19ITc0oIvC6yml0bmceojHa1n9yNzrk4NB26lIIXLmOo/export?format=csv&gid=$1736479996`;
+    const url = `https://api.allorigins.win/raw?url=${encodeURIComponent(direct)}&t=${Date.now()}`;
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('Sheet non accessible');
     const csv = await resp.text();
