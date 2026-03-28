@@ -135,10 +135,10 @@ async function loadData() {
       return cols;
     });
 
-    // Index par nom (colonne 0 = nom)
+    // Index par nom (colonne 1 = nom, colonne 0 = Horodateur)
     const confirmed = {};
     rows.forEach(r => {
-      if (r[0]) confirmed[r[0].trim().toLowerCase()] = r;
+      if (r[1]) confirmed[r[1].trim().toLowerCase()] = r;
     });
 
     const tbody = document.getElementById('tbody');
@@ -151,16 +151,15 @@ async function loadData() {
       const isOk = !!r;
       if (isOk) {
         nbOk++;
-        nbPers += parseInt(r[2]) || 0;
+        nbPers += parseInt(r[3]) || 0;
       }
 
       tbody.innerHTML += `
         <tr>
           <td style="color:#888;text-align:center">${i+1}</td>
           <td><strong>${p.nom}</strong><br><span style="color:#9b72cf;font-size:10px">@${p.pseudo}</span></td>
-          <td style="color:#ccc;max-width:140px;white-space:normal">${r ? r[1] : '—'}</td>
-          <td style="text-align:center;font-weight:bold">${r ? r[2] : '—'}</td>
-          <td style="text-align:center">${r ? (r[3]||'0') : '—'}</td>
+          <td style="color:#ccc;max-width:140px;white-space:normal">${r ? r[2] : '—'}</td>
+          <td style="text-align:center;font-weight:bold">${r ? r[3] : '—'}</td>
           <td style="text-align:center">${r ? (r[4]||'0') : '—'}</td>
           <td style="text-align:center">${r ? (r[5]||'0') : '—'}</td>
           <td style="text-align:center">${r ? (r[6]||'0') : '—'}</td>
@@ -169,8 +168,9 @@ async function loadData() {
           <td style="text-align:center">${r ? (r[9]||'0') : '—'}</td>
           <td style="text-align:center">${r ? (r[10]||'0') : '—'}</td>
           <td style="text-align:center">${r ? (r[11]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[12]||'0') : '—'}</td>
           <td><span class="badge ${isOk ? 'ok' : 'wait'}">${isOk ? '✅ Confirmé' : '⏳ En attente'}</span></td>
-          <td style="font-size:10px;color:#888">${r ? r[12] : '—'}</td>
+          <td style="font-size:10px;color:#888">${r ? r[13] : '—'}</td>
         </tr>`;
     });
 
