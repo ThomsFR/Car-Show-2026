@@ -113,7 +113,8 @@ async function loadData() {
   document.getElementById('table').style.display = 'none';
 
   try {
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}&t=${Date.now()}`;
+    const direct = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}&t=${Date.now()}`;
+    const url = `https://corsproxy.io/?${encodeURIComponent(direct)}`;
     const resp = await fetch(url);
     if (!resp.ok) throw new Error('Sheet non accessible');
     const csv = await resp.text();
