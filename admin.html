@@ -22,17 +22,19 @@ h1{font-family:'Bebas Neue',cursive;font-size:26px;color:var(--purple);letter-sp
 .stat.wait .stat-num{color:#f9a825;}
 .btn-refresh{background:var(--purple);color:white;border:none;padding:10px 24px;border-radius:8px;font-family:'Bebas Neue',cursive;font-size:16px;letter-spacing:2px;cursor:pointer;margin-bottom:20px;display:block;margin-left:auto;margin-right:auto;}
 .sheet-link{text-align:center;margin-bottom:20px;}
-.sheet-link a{color:var(--purple);font-size:13px;}
-table{width:100%;max-width:1000px;margin:0 auto;border-collapse:collapse;font-size:13px;}
-th{background:var(--purple);color:white;padding:10px 12px;text-align:left;font-weight:600;letter-spacing:1px;font-size:11px;text-transform:uppercase;}
-td{padding:10px 12px;border-bottom:1px solid #3a3840;vertical-align:top;}
+.sheet-link a{color:var(--purple);font-size:13px;text-decoration:none;}
+.table-wrap{overflow-x:auto;}
+table{width:100%;max-width:1100px;margin:0 auto;border-collapse:collapse;font-size:12px;}
+th{background:var(--purple);color:white;padding:9px 10px;text-align:left;font-weight:600;letter-spacing:1px;font-size:10px;text-transform:uppercase;white-space:nowrap;}
+td{padding:9px 10px;border-bottom:1px solid #3a3840;vertical-align:middle;white-space:nowrap;}
 tr:nth-child(even){background:rgba(255,255,255,0.03);}
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;}
 .badge.ok{background:#1b5e20;color:#a5d6a7;}
 .badge.wait{background:#4a3000;color:#ffcc02;}
-.loading{text-align:center;padding:40px;color:#aaa;}
+.loading{text-align:center;padding:40px;color:#aaa;font-size:14px;}
 .denied{display:none;text-align:center;padding:60px 20px;}
-.denied h2{font-family:'Bebas Neue',cursive;font-size:26px;color:var(--red);}
+.denied h2{font-family:'Bebas Neue',cursive;font-size:26px;color:var(--red);margin-bottom:8px;}
+.denied p{color:#666;font-size:14px;}
 #admin-content{display:none;}
 </style>
 </head>
@@ -41,7 +43,7 @@ tr:nth-child(even){background:rgba(255,255,255,0.03);}
 <div class="denied" id="denied">
   <div style="font-size:64px;margin-bottom:16px;">🔒</div>
   <h2>Accès refusé</h2>
-  <p style="color:#666;margin-top:8px;">Page réservée à l'administrateur.</p>
+  <p>Page réservée à l'administrateur.</p>
 </div>
 
 <div id="admin-content">
@@ -61,28 +63,44 @@ tr:nth-child(even){background:rgba(255,255,255,0.03);}
   </div>
 
   <div class="sheet-link">
-    <a href="https://docs.google.com/spreadsheets/d/SHEET_ID_PLACEHOLDER" target="_blank">📊 Ouvrir le Google Sheet complet →</a>
+    <a href="https://docs.google.com/spreadsheets/d/19ITc0oIvC6yml0bmceojHa1n9yNzrk4NB26lIIXLmOo/edit#gid=1736479996" target="_blank">📊 Ouvrir le Google Sheet complet →</a>
   </div>
 
   <button class="btn-refresh" onclick="loadData()">↻ ACTUALISER</button>
 
-  <div class="loading" id="loading">Chargement...</div>
-  <table id="table" style="display:none;">
-    <thead><tr>
-      <th>#</th><th>Nom</th><th>Véhicule</th><th>Pers.</th>
-      <th>Jambon</th><th>Thon</th><th>Coca</th><th>Ice Tea</th>
-      <th>Cristaline</th><th>Perrier</th><th>C.Simple</th><th>C.Spécial</th><th>Café</th>
-      <th>Statut</th><th>Confirmé le</th>
-    </tr></thead>
-    <tbody id="tbody"></tbody>
-  </table>
+  <div class="loading" id="loading">Chargement des confirmations...</div>
+
+  <div class="table-wrap">
+    <table id="table" style="display:none;">
+      <thead><tr>
+        <th>#</th>
+        <th>Nom</th>
+        <th>Véhicule</th>
+        <th>Pers.</th>
+        <th>Jambon</th>
+        <th>Thon</th>
+        <th>Coca</th>
+        <th>Ice Tea</th>
+        <th>Cristaline</th>
+        <th>Perrier</th>
+        <th>C.Simple</th>
+        <th>C.Spécial</th>
+        <th>Café</th>
+        <th>Statut</th>
+        <th>Confirmé le</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
 </div>
 
 <script>
 const ADMIN_CODE = '8cZtcmwbxeU';
-const SHEET_ID = 'SHEET_ID_PLACEHOLDER';
+const SHEET_ID = '19ITc0oIvC6yml0bmceojHa1n9yNzrk4NB26lIIXLmOo';
+const GID = '1736479996';
 const PARTICIPANTS = [{"nom": "Schmitt Emmanuel", "pseudo": "manouch350z"}, {"nom": "Kilim Alis", "pseudo": "Feuzzouille"}, {"nom": "Conrad Florian", "pseudo": "23 autosport"}, {"nom": "Ficek Florent", "pseudo": "23_autosport"}, {"nom": "Salla Jordan", "pseudo": "Jojobikeandcarlife68"}, {"nom": "Welcklen Nicolas", "pseudo": "welcklen_nicolas"}, {"nom": "Liebenguth Esteban", "pseudo": "_estez_"}, {"nom": "Geoffroy Jonathan", "pseudo": "_jon_z33"}, {"nom": "Eckert Jérôme", "pseudo": "benz.by.jerome"}, {"nom": "Fuchs Cyril", "pseudo": "Cyril_68_"}, {"nom": "Florian Egger", "pseudo": "fe78_rs6"}, {"nom": "Keller Wilfried", "pseudo": "Will.kellouu"}, {"nom": "Trautmann Nathab", "pseudo": "tranathy"}, {"nom": "Karcher Emerick", "pseudo": "emerick.raw"}, {"nom": "Maximilien Deparis", "pseudo": "Mazda_mps"}, {"nom": "Bohli Florian", "pseudo": "Green_monster68"}, {"nom": "Florian Raehm", "pseudo": "Vintagemotorsport_fr"}, {"nom": "Bastien Wenger", "pseudo": "bastoooos"}, {"nom": "Garcia Mickael", "pseudo": "Mickaaa68"}, {"nom": "Biehler Jérémie", "pseudo": "Jeremie_b_insta"}, {"nom": "Jean Baptiste Lallemant", "pseudo": "Jb"}, {"nom": "Lionel Rohner", "pseudo": "carevent.select"}, {"nom": "Thomas Elles", "pseudo": "cell.carmedia"}, {"nom": "Le Coz Kylian", "pseudo": "Kylian_lecoz"}, {"nom": "Riand Anthony", "pseudo": "Anthony"}, {"nom": "Kempf Lucas", "pseudo": "Lucas_kmf98"}, {"nom": "Noellenburg Nadège", "pseudo": "LaSainteMegane"}, {"nom": "Bouabid Malcom", "pseudo": "malcom.in.the.stang"}, {"nom": "Mouth Emmanuel", "pseudo": "Manumth"}, {"nom": "Oceane Kunkler", "pseudo": "oc3an3_e36is"}, {"nom": "Krebs Bryan", "pseudo": "mustangtcs"}, {"nom": "Suro Anthony", "pseudo": "anthonysuro"}, {"nom": "Freyburger Thomas", "pseudo": "Club.automoto.247"}, {"nom": "Loïc Fuchs", "pseudo": "Karl O Mann"}, {"nom": "Luc Gaessler", "pseudo": "Louko_rallye"}, {"nom": "Eberlin Julien", "pseudo": "Julien"}, {"nom": "Liebenguth Stéphane", "pseudo": "Mxleb68"}, {"nom": "Legigan Anthony", "pseudo": "antho_z34"}, {"nom": "Freyburger Gerard", "pseudo": "Gege"}, {"nom": "Sother Thomas", "pseudo": "thomas_str__"}, {"nom": "Page Jeremy", "pseudo": "jerem.pg.68"}, {"nom": "Sibiri William", "pseudo": "sibiriwilliam"}, {"nom": "Hidem B", "pseudo": "mk4demons"}];
 
+// Vérification accès
 if (new URLSearchParams(window.location.search).get('code') !== ADMIN_CODE) {
   document.getElementById('denied').style.display = 'block';
 } else {
@@ -95,16 +113,31 @@ async function loadData() {
   document.getElementById('table').style.display = 'none';
 
   try {
-    // Lit le Google Sheet publié en CSV
-    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=0`;
+    const url = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/export?format=csv&gid=${GID}&t=${Date.now()}`;
     const resp = await fetch(url);
+    if (!resp.ok) throw new Error('Sheet non accessible');
     const csv = await resp.text();
-    const rows = csv.trim().split('\n').slice(1).map(r => r.split(',').map(c => c.replace(/^"|"$/g,'').trim()));
 
-    // Index des confirmations par nom
+    // Parse CSV
+    const lines = csv.trim().split('\n');
+    const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g,'').trim().toLowerCase());
+    const rows = lines.slice(1).map(line => {
+      const cols = [];
+      let current = '';
+      let inQuotes = false;
+      for (let ch of line) {
+        if (ch === '"') inQuotes = !inQuotes;
+        else if (ch === ',' && !inQuotes) { cols.push(current.trim()); current = ''; }
+        else current += ch;
+      }
+      cols.push(current.trim());
+      return cols;
+    });
+
+    // Index par nom (colonne 0 = nom)
     const confirmed = {};
     rows.forEach(r => {
-      if (r[0]) confirmed[r[0].toLowerCase()] = r;
+      if (r[0]) confirmed[r[0].trim().toLowerCase()] = r;
     });
 
     const tbody = document.getElementById('tbody');
@@ -115,34 +148,40 @@ async function loadData() {
       const key = p.nom.toLowerCase();
       const r = confirmed[key];
       const isOk = !!r;
-      if (isOk) { nbOk++; nbPers += parseInt(r[2]) || 0; }
+      if (isOk) {
+        nbOk++;
+        nbPers += parseInt(r[2]) || 0;
+      }
 
-      tbody.innerHTML += `<tr>
-        <td style="color:#888">${i+1}</td>
-        <td><strong>${p.nom}</strong><br><span style="color:#9b72cf;font-size:11px">@${p.pseudo}</span></td>
-        <td style="color:#ccc;font-size:12px">${r ? r[1] : '—'}</td>
-        <td style="text-align:center">${r ? r[2] : '—'}</td>
-        <td style="text-align:center">${r ? (r[3]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[4]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[5]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[6]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[7]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[8]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[9]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[10]||'0') : '—'}</td>
-        <td style="text-align:center">${r ? (r[11]||'0') : '—'}</td>
-        <td><span class="badge ${isOk?'ok':'wait'}">${isOk?'✅ Confirmé':'⏳ En attente'}</span></td>
-        <td style="font-size:11px;color:#888">${r ? r[12] : '—'}</td>
-      </tr>`;
+      tbody.innerHTML += `
+        <tr>
+          <td style="color:#888;text-align:center">${i+1}</td>
+          <td><strong>${p.nom}</strong><br><span style="color:#9b72cf;font-size:10px">@${p.pseudo}</span></td>
+          <td style="color:#ccc;max-width:140px;white-space:normal">${r ? r[1] : '—'}</td>
+          <td style="text-align:center;font-weight:bold">${r ? r[2] : '—'}</td>
+          <td style="text-align:center">${r ? (r[3]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[4]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[5]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[6]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[7]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[8]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[9]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[10]||'0') : '—'}</td>
+          <td style="text-align:center">${r ? (r[11]||'0') : '—'}</td>
+          <td><span class="badge ${isOk ? 'ok' : 'wait'}">${isOk ? '✅ Confirmé' : '⏳ En attente'}</span></td>
+          <td style="font-size:10px;color:#888">${r ? r[12] : '—'}</td>
+        </tr>`;
     });
 
     document.getElementById('s-ok').textContent = nbOk;
-    document.getElementById('s-wait').textContent = 43 - nbOk;
-    document.getElementById('s-pers').textContent = nbPers;
+    document.getElementById('s-wait').textContent = PARTICIPANTS.length - nbOk;
+    document.getElementById('s-pers').textContent = nbPers || '—';
     document.getElementById('loading').style.display = 'none';
     document.getElementById('table').style.display = 'table';
+
   } catch(e) {
-    document.getElementById('loading').textContent = 'Erreur de chargement — vérifie que le Google Sheet est bien publié.';
+    document.getElementById('loading').textContent =
+      '⚠️ Impossible de charger les données. Vérifie que le Google Sheet est bien publié en CSV (Fichier → Partager → Publier sur le web → CSV).';
   }
 }
 </script>
